@@ -2,26 +2,35 @@
 # Author: MarkusWessjohann
 # Date: 19.10.2018
 # Desc: Metric git Keyword Extension
-# $ Metric: $
+# # Metric: #
 
 BEGIN {
-loCounter=0;
+loc=0;
 metricLineNr=0;
+benchmarkLineNr=0;
 complexity=0; 
+benchmarkComplexity=1500; 
+benchmarkLoc=1000; 
 }
 
 // { line[NR]=$0 ;}
 /^[\t]*/ { match($0, "[^\t]");complexity+=RSTART;}
 /^[ ]*/ { match($0, "[^ ]");complexity+=(RSTART/2);}
-/\$ Metric: \$/ {metricLineNr=NR; print "MetricLine: ", NR;}
+/# Metric *:.*#/ {metricLineNr=NR}
+/# Benchmark:.*#/ {benchmarkLineNr=NR}
 
 END { 
-loCounter=NR; 
+loc=NR; 
+date=strftime("%Y-%m-%d")
 if (metricLineNr> 0) {
-  newString="$ Metric: Complexity:" complexity " Loc:" loCountear " $";
-  gsub("/\$ Metric:.*\$/", newString line[metricLineNr]);
+  newString=sprintf("# Metric   : %s Complexity: %5d Loc: %5d #", date, complexity, loc);
+  sub("# Metric *:.*#", newString, line[metricLineNr]);
 }
-printf("complexity: %s loc:%s\n",complexity,loCounter);
+if (benchmarkLineNr> 0) {
+  newString=sprintf("# Benchmark: %s Complexity: %5d Loc: %5d #", date, benchmarkComplexity, benchmarkLoc);
+  sub("# Benchmark:.*#", newString, line[benchmarkLineNr]);
+}
+#printf("complexity: %s loc:%s\n",complexity,loc);
 for(i=1;i<=NR;i++) 
   printf("%s\n",line[i]);
 }

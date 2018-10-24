@@ -1,0 +1,7 @@
+#!/bin/sh
+# Author: MarkusWessjohann
+# Date: 19.10.2018
+# Desc: Metric git Keyword Extension
+# # Metric: #
+
+sed -e "s/\(.*# Metric *:\).*\( #.*\)/\1\2/" -e "s/\(.*# Benchmark *:\).*\( #.*\)/\1\2/" 
