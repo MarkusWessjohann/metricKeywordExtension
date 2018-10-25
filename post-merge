@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "---------------------------------"
+for file in `git diff-tree -r --name-only --no-commit-id HEAD`
+do 
+  commits=`git log  --follow --oneline -- "$file" | wc -l`
+  filename=`basename "$file"`
+  cat "$file" | 
+	sed "s/\(.*\)# Commits *:.*#/\1# Commits  : $commits Benchmark: 100 #/" > "/tmp/$filename"
+  mv "/tmp/$filename" "$file"
+done
+
+echo "---------------------------------"

@@ -4,4 +4,7 @@
 # Desc: Metric git Keyword Extension
 # # Metric: #
 
-sed -e "s/\(.*# Metric *:\).*\( #.*\)/\1\2/" -e "s/\(.*# Benchmark *:\).*\( #.*\)/\1\2/" 
+sed \
+  -e "s/\(.*# Metric *:\).*\( #.*\)/\1\2/" \
+  -e "s/\(.*# Benchmark *:\).*\( #.*\)/\1\2/" \
+  -e "s/\(.*# Commits *:\).*\( #.*\)/\1\2/" 
