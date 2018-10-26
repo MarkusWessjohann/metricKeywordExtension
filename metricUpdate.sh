@@ -2,6 +2,7 @@
 # Author: MarkusWessjohann
 # Date: 24.08.2017
 # Desc: metric keyword substitution 
+#       Inserts # Commits
 
 . metricUpdateFunc.sh
 
