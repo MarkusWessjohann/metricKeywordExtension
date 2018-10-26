@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: MarkusWessjohann
+# Date: 19.10.2018
+# Desc: Metric git keyword substitution post-rebase hook
+#       Inserts # Commits
 
 . metricUpdateFunc.sh
 

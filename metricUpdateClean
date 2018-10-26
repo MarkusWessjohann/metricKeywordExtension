@@ -1,7 +1,8 @@
 #!/bin/sh
 # Author: MarkusWessjohann
 # Date: 19.10.2018
-# Desc: Metric git keyword substition cleaning
+# Desc: Metric git keyword substitution cleaning
+#       Removes Complexity and # Commits
 
 . metricUpdateFunc.sh
 

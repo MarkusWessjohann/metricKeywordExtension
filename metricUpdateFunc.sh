@@ -1,7 +1,7 @@
 #!/bin/sh
 # Author: MarkusWessjohann
 # Date: 24.08.2017
-# Desc: 
+# Desc: metric helper-functions and variables
 
 countCommits() {
   commitFile="$1"
