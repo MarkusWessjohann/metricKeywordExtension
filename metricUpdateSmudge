@@ -1,13 +1,11 @@
 #!/usr/bin/awk -f
 # Author: MarkusWessjohann
 # Date: 19.10.2018
-# Desc: Metric git Keyword Extension
-# # Metric: #
+# Desc: Metric git keyword substitution Smudge
 
 BEGIN {
 loc=0;
 metricLineNr=0;
-benchmarkLineNr=0;
 complexity=0; 
 benchmarkComplexity=1500; 
 benchmarkLoc=1000; 
@@ -17,20 +15,14 @@ benchmarkLoc=1000;
 /^[\t]*/ { match($0, "[^\t]");complexity+=RSTART;}
 /^[ ]*/ { match($0, "[^ ]");complexity+=(RSTART/2);}
 /# Metric *:.*#/ {metricLineNr=NR}
-/# Benchmark:.*#/ {benchmarkLineNr=NR}
 
 END { 
 loc=NR; 
 date=strftime("%Y-%m-%d")
 if (metricLineNr> 0) {
-  newString=sprintf("# Metric   : %s Complexity: %5d Loc: %5d #", date, complexity, loc);
+  newString=sprintf("# Metric  : %s Complexity: %4d <! %4d Loc: %4d <! %4d #", date, complexity, benchmarkComplexity, loc, benchmarkLoc);
   sub("# Metric *:.*#", newString, line[metricLineNr]);
 }
-if (benchmarkLineNr> 0) {
-  newString=sprintf("# Benchmark: %s Complexity: %5d Loc: %5d #", date, benchmarkComplexity, benchmarkLoc);
-  sub("# Benchmark:.*#", newString, line[benchmarkLineNr]);
-}
-#printf("complexity: %s loc:%s\n",complexity,loc);
 for(i=1;i<=NR;i++) 
   printf("%s\n",line[i]);
 }

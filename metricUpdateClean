@@ -1,10 +1,10 @@
 #!/bin/sh
 # Author: MarkusWessjohann
 # Date: 19.10.2018
-# Desc: Metric git Keyword Extension
-# # Metric: #
+# Desc: Metric git keyword substition cleaning
+
+. metricUpdateFunc.sh
 
 sed \
-  -e "s/\(.*# Metric *:\).*\( #.*\)/\1\2/" \
-  -e "s/\(.*# Benchmark *:\).*\( #.*\)/\1\2/" \
-  -e "s/\(.*# Commits *:\).*\( #.*\)/\1\2/" 
+  -e "s/$metricPatternClean/\1\2/" \
+  -e "s/$commitPatternClean/\1\2/" 
