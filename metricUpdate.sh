@@ -20,10 +20,7 @@ do
   [ -f "$file" ] || continue
   filename=`basename "$file"`
   echo "Processing file: $filename"
-  countCommits "$file"
-  setCommitSubstitution
   cat "$file" | \
-    metricUpdateSmudge | \
-    sed "s/$commitPattern/$commitSubstitution/" > "/tmp/$filename"
-  mv "/tmp/$filename" "$file"
+  metricUpdateSmudge "$file" > "${file}.tmp"
+  mv "${file}.tmp" "$file"
 done

@@ -13,6 +13,20 @@ setBreakPointCommits() {
   breakPointCommits=100
 }
 
+setBreakPointComplexity() {
+  breakPointComplexity=1500
+}
+
+setBreakPointLoc() {
+  breakPointLoc=1000
+}
+setAllBreakPoints() {
+  setBreakPointCommits
+  setBreakPointComplexity
+  setBreakPointLoc
+}
+
+
 setCommitSubstitution() {
   commitSubstitution="\1# Commits : $commits <! $breakPointCommits #"
 }

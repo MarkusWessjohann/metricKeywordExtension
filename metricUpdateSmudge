@@ -1,30 +1,48 @@
-#!/usr/bin/awk -f
+#!/bin/sh
 # Author: MarkusWessjohann
 # Date: 19.10.2018
 # Desc: Metric git keyword substitution Smudge
 #       Inserts the Complexity and LOC
 
-BEGIN {
+file="$1"
+
+. metricUpdateFunc.sh
+
+setAllBreakPoints
+
+countCommits "$file"
+
+cat - | \
+awk -- 'BEGIN {
 loc=0;
 metricLineNr=0;
+commitLineNr=0;
 complexity=0; 
-benchmarkComplexity=1500; 
-benchmarkLoc=1000; 
+commits='$commits';
+breakPointComplexity='$breakPointComplexity'; 
+breakPointLoc='$breakPointLoc'; 
+breakPointCommits='$breakPointCommits'; 
 }
 
 // { line[NR]=$0 ;}
 /^[\t]*/ { match($0, "[^\t]");complexity+=RSTART;}
 /^[ ]*/ { match($0, "[^ ]");complexity+=(RSTART/2);}
 /# Metric *:.*#/ {metricLineNr=NR}
+/# Commits *:.*#/ {commitLineNr=NR}
 
 END { 
 loc=NR; 
 date=strftime("%Y-%m-%d")
 if (metricLineNr> 0) {
-  newString=sprintf("# Metric  : %s Complexity: %4d <! %4d Loc: %4d <! %4d #", date, complexity, benchmarkComplexity, loc, benchmarkLoc);
+  newString=sprintf("# Metric  : %s Complexity: %4d <! %4d Loc: %4d <! %4d #", date, complexity, breakPointComplexity, loc, breakPointLoc);
+  sub("# Metric *:.*#", newString, line[metricLineNr]);
+}
+if (commitLineNr> 0) {
+  newString=sprintf("# Commits :  %4d <! %4d #", commits, breakPointCommits);
   sub("# Metric *:.*#", newString, line[metricLineNr]);
 }
 for(i=1;i<=NR;i++) 
   printf("%s\n",line[i]);
-}
+}'
+
 
