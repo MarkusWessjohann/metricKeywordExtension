@@ -2,7 +2,11 @@
 # Author: MarkusWessjohann
 # Date: 19.10.2018
 # Desc: Metric git keyword substitution Smudge
-#       Inserts the Complexity and LOC
+#       Inserts : 
+#       * Complexity
+#       * LOC
+#       * # Commits
+
 
 file="$1"
 
@@ -39,7 +43,7 @@ if (metricLineNr> 0) {
 }
 if (commitLineNr> 0) {
   newString=sprintf("# Commits :  %4d <! %4d #", commits, breakPointCommits);
-  sub("# Metric *:.*#", newString, line[metricLineNr]);
+  sub("# Commits *:.*#", newString, line[metricLineNr]);
 }
 for(i=1;i<=NR;i++) 
   printf("%s\n",line[i]);
