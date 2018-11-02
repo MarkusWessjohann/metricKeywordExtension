@@ -42,8 +42,8 @@ if (metricLineNr> 0) {
   sub("# Metric *:.*#", newString, line[metricLineNr]);
 }
 if (commitLineNr> 0) {
-  newString=sprintf("# Commits :  %4d <! %4d #", commits, breakPointCommits);
-  sub("# Commits *:.*#", newString, line[metricLineNr]);
+  newString=sprintf("# Commits : 4d <! %4d #", commits, breakPointCommits);
+  sub("# Commits *:.*#", newString, line[commitLineNr]);
 }
 for(i=1;i<=NR;i++) 
   printf("%s\n",line[i]);

@@ -6,6 +6,8 @@
 
 . metricUpdateFunc.sh
 
+file="$1"
+
 sed \
   -e "s/$metricPatternClean/\1\2/" \
   -e "s/$commitPatternClean/\1\2/" 
