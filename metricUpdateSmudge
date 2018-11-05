@@ -27,7 +27,6 @@ breakPointComplexity='$breakPointComplexity';
 breakPointLoc='$breakPointLoc'; 
 breakPointCommits='$breakPointCommits'; 
 }
-
 // { line[NR]=$0 ;}
 /^[\t]*/ { match($0, "[^\t]");complexity+=RSTART;}
 /^[ ]*/ { match($0, "[^ ]");complexity+=(RSTART/2);}
