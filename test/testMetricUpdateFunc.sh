@@ -11,5 +11,10 @@ testcountCommits() {
   assertEquals "no file"  0 "$commits"
 }
 
+testcountCommitsSelf() {
+  countCommits "$0"
+  assertEquals "self"  2 "$commits"
+}
+
 . ../lib/shunit2
 

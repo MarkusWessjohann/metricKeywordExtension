@@ -35,9 +35,8 @@ breakPointCommits='$breakPointCommits';
 
 END { 
 loc=NR; 
-date=strftime("%Y-%m-%d")
 if (metricLineNr> 0) {
-  newString=sprintf("# Metric  : %s Complexity: %4d <! %4d Loc: %4d <! %4d #", date, complexity, breakPointComplexity, loc, breakPointLoc);
+  newString=sprintf("# Metric  : Complexity: %4d <! %4d Loc: %4d <! %4d #", complexity, breakPointComplexity, loc, breakPointLoc);
   sub("# Metric *:.*#", newString, line[metricLineNr]);
 }
 if (commitLineNr> 0) {
