@@ -2,7 +2,7 @@
 # Author: MarkusWessjohann
 # Date: 19.10.2018
 # Desc: Metric git keyword substitution cleaning
-#       Removes Complexity and # Commits
+#       Removes Complexity, # Commits, loc and techn. debt
 
 . metricUpdateFunc.sh
 
@@ -10,4 +10,6 @@ file="$1"
 
 sed \
   -e "s/$metricPatternClean/\1\2/" \
-  -e "s/$commitPatternClean/\1\2/" 
+  -e "s/$locPatternClean/\1\2/" \
+  -e "s/$commitPatternClean/\1\2/" \
+  -e "s/$techDebtPatternClean/\1\2/" 

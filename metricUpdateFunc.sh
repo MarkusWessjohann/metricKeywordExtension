@@ -9,6 +9,10 @@ countCommits() {
   commits=`git log --follow --oneline -- "$commitFile" | wc -l`
 }
 
+setBreakPointTechDebt() {
+  breakPointTechDebt=100
+}
+
 setBreakPointCommits() {
   breakPointCommits=100
 }
@@ -24,6 +28,7 @@ setAllBreakPoints() {
   setBreakPointCommits
   setBreakPointComplexity
   setBreakPointLoc
+  setBreakPointTechDebt
 }
 
 
@@ -34,8 +39,11 @@ setCommitSubstitution() {
 commitPattern="\(.*\)# Commits *:.*#"
 commitPatternClean="\(.*# Commits *:\).*\( #.*\)"
 
-metricPatternClean="\(.*# Metric *:\).*\( #.*\)"
+locPatternClean="\(.*# Loc *:\).*\( #.*\)"
 
+metricPatternClean="\(.*# Complexity *:\).*\( #.*\)"
+
+techDebtPatternClean="\(.*# tech\. Debt *:\).*\( #.*\)"
 
 
 
