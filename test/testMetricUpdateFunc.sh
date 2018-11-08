@@ -13,8 +13,16 @@ testcountCommits() {
 
 testcountCommitsSelf() {
   countCommits "$0"
-  assertEquals "self"  2 "$commits"
+  assertEquals "self"  3 "$commits"
 }
+
+testsetBreakPoints() {
+  setAllBreakPoints
+  assertTrue "LOC breakpoint is set"  "[ $breakPointLoc -ge 1000 ]"
+  assertTrue "Complextity breakpoint is set"  "[ $breakPointComplexity -ge 1500 ]"
+  assertTrue "Commit breakpoint is set"  "[ $breakPointCommits -ge 100 ]"
+}
+
 
 . ../lib/shunit2
 
