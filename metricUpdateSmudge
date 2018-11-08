@@ -28,8 +28,8 @@ breakPointLoc='$breakPointLoc';
 breakPointCommits='$breakPointCommits'; 
 }
 // { line[NR]=$0 ;}
-/^[\t]*/ { match($0, "[^\t]");complexity+=RSTART;}
-/^[ ]*/ { match($0, "[^ ]");complexity+=(RSTART/2);}
+/^[\t]+/ { match($0, "[^\t]");complexity+=RSTART;}
+/^[ ]+/ { match($0, "[^ ]");complexity+=(RSTART/2);}
 /# Metric *:.*#/ {metricLineNr=NR}
 /# Commits *:.*#/ {commitLineNr=NR}
 
