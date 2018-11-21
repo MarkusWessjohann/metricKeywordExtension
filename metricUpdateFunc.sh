@@ -17,6 +17,10 @@ setBreakPointCommits() {
   breakPointCommits=100
 }
 
+setBreakPointLineDiff() {
+  breakPointLineDiff=380
+}
+
 setBreakPointComplexity() {
   breakPointComplexity=1500
 }
@@ -29,6 +33,7 @@ setAllBreakPoints() {
   setBreakPointComplexity
   setBreakPointLoc
   setBreakPointTechDebt
+  setBreakPointLineDiff
 }
 
 
@@ -45,5 +50,6 @@ metricPatternClean="\(.*# Complexity *:\).*\( #.*\)"
 
 techDebtPatternClean="\(.*# tech\. Debt *:\).*\( #.*\)"
 
+lineDiffPatternClean="\(.*# LineDiff *:\).*\( #.*\)"
 
 
