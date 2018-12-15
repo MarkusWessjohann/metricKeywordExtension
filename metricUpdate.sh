@@ -13,8 +13,6 @@ then
   files=`git diff --name-only`
 fi
 
-setBreakPointCommits
-
 for file in $files
 do
   [ -f "$file" ] || continue

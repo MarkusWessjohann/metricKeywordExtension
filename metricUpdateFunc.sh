@@ -3,39 +3,13 @@
 # Date: 24.08.2017
 # Desc: metric helper-functions and variables
 
+. metricBreakPoints.sh
+
 countCommits() {
   commitFile="$1"
   commits=0
   commits=`git log --follow --oneline -- "$commitFile" | wc -l`
 }
-
-setBreakPointTechDebt() {
-  breakPointTechDebt=100
-}
-
-setBreakPointCommits() {
-  breakPointCommits=100
-}
-
-setBreakPointLineDiff() {
-  breakPointLineDiff=380
-}
-
-setBreakPointComplexity() {
-  breakPointComplexity=1500
-}
-
-setBreakPointLoc() {
-  breakPointLoc=1000
-}
-setAllBreakPoints() {
-  setBreakPointCommits
-  setBreakPointComplexity
-  setBreakPointLoc
-  setBreakPointTechDebt
-  setBreakPointLineDiff
-}
-
 
 setCommitSubstitution() {
   commitSubstitution="\1# Commits : $commits <! $breakPointCommits #"

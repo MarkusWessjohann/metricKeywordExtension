@@ -1,0 +1,5 @@
+breakPointTechDebt=100
+breakPointCommits=100
+breakPointLineDiff=380
+breakPointComplexity=1500
+breakPointLoc=1000

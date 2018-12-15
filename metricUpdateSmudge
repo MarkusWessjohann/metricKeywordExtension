@@ -14,8 +14,6 @@ file="$1"
 
 . metricUpdateFunc.sh
 
-setAllBreakPoints
-
 countCommits "$file"
 
 cat - | \
