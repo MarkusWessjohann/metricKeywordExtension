@@ -10,20 +10,19 @@ countCommits() {
   commits=0
   commits=`git log --follow --oneline -- "$commitFile" | wc -l`
 }
-
-setCommitSubstitution() {
-  commitSubstitution="\1# Commits : $commits <! $breakPointCommits #"
-}
-
-commitPattern="\(.*\)# Commits *:.*#"
+commitPattern="# Commits *:.*#"
 commitPatternClean="\(.*# Commits *:\).*\( #.*\)"
 
+locPattern="# Loc *:.*#"
 locPatternClean="\(.*# Loc *:\).*\( #.*\)"
 
+metricPattern="# Complexity *:.*#"
 metricPatternClean="\(.*# Complexity *:\).*\( #.*\)"
 
+techDebtPattern="# tech. Debt *:.*#"
 techDebtPatternClean="\(.*# tech\. Debt *:\).*\( #.*\)"
 
+lineDiffPattern="# LineDiff *:.*#"
 lineDiffPatternClean="\(.*# LineDiff *:\).*\( #.*\)"
 
 
