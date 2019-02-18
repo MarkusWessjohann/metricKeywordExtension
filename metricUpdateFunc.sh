@@ -8,7 +8,8 @@
 countCommits() {
   commitFile="$1"
   commits=0
-  commits=`git log --follow --oneline -- "$commitFile" | wc -l`
+  filename=`basename "$commitFile"`
+  commits=`git log --follow --name-only -- "$commitFile" |grep "$filename" | wc -l`
 }
 commitPattern="# Commits *:.*#"
 commitPatternClean="\(.*# Commits *:\).*\( #.*\)"
