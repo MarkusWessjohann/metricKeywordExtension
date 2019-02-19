@@ -1,0 +1,31 @@
+ #!/bin/sh
+ # Author: MarkusWessjohann
+ # Date: 24.08.2017
+ # Desc: creates a new Breakpointsfile and pushes the file to the repro
+
+ScriptDir=`dirname "$0"`
+PATH=$PATH:"$ScriptDir"
+export PATH
+REPRO="<repropath>"
+BPDir="<Scriptspath>"
+commitMsg="<commit message>"
+set -e
+
+cd "$REPRO"
+
+# make repro clean
+git stash -u
+
+# create new file
+getBreakPoints.sh > "${BPDir}/metricBreakPoints.sh.tmp"
+mv "${BPDir}/metricBreakPoints.sh.tmp" "${BPDir}/metricBreakPoints.sh"
+# clean up
+rm "${BPDir}/miner/*.pyc" 2>/dev/null
+
+# commit new file
+git add "$BPDir"
+git commit -m"$commitMsg"
+
+# get old repro back
+git stash pop
+

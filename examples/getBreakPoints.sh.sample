@@ -1,0 +1,64 @@
+#!/bin/sh
+# Author: MarkusWessjohann
+# Date: 24.08.2017
+# Desc: creating Breakpointsfile Example
+
+scriptDir=`dirname "$0"`
+# Store datafiles
+date=`date +"%Y%m%d"`
+dataDir="$HOME/metric/metricData/"
+dataFile="${dataDir}/metric_data${date}.csv"
+# path to the Source Code repro
+srcDir="<toDo>"
+
+if [ ! -d "$srcDir" ]
+then
+  echo "Source Code diretory doesn't exisits"
+  exit 1
+fi
+
+if [ ! -d "$dataDir" ]
+then
+  mkdir -p "$dataDir"
+fi
+
+rm "$dataFile" 2>/dev/null
+
+cd "$srcDir"
+for srcFile  in `find . -type f  \
+  -not -path "*<exclude Path1>*" \
+  -not -path "*<exclude Path2>*"`
+do
+  # complex_analysis script from https://github.com/MarkusWessjohann/maat-scripts Branch addComplexityMetric
+  python "${scriptDir}/miner/complexity_analysis.py" "$srcFile" >> "$dataFile"
+done
+
+modules=`cat "$dataFile" | wc -l`
+# Breakpoints at 5% from all modules
+lineNr="$(($modules / 40))"
+complexityNr="$(($modules / 40))"
+lineDiffNr="$(($modules / 40))"
+
+# get values at this postion (rounded)
+lineBP=`cat "$dataFile" | \
+  sort -k2 -t";"  -nr| \
+  sed -n "${lineNr}p" | \
+  cut -f2 -d";"`
+lineBP="$(($lineBP / 100 * 100))"
+complexityBP=`cat "$dataFile" | \
+  sort -k3 -t";"  -nr| \
+  sed -n "${complexityNr}p" | \
+  cut -f3 -d";"`
+complexityBP="$(($complexityBP / 100 * 100))"
+lineDiffBP=`cat "$dataFile" | \
+  sort -k7 -t";"  -nr| \
+  sed -n "${lineDiffNr}p" | \
+  cut -f7 -d";"`
+lineDiffBP="$(($lineDiffBP / 10 * 10))"
+# print the new breakpoints 
+echo "breakPointLineDiff=$lineDiffBP"
+echo "breakPointLoc=$lineBP"
+echo "breakPointComplexity=$complexityBP"
+echo "breakPointTechDebt=2"
+echo "breakPointCommits=100"
+
