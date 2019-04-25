@@ -70,12 +70,11 @@ For the number of Commits there is no script jet. Count the commits for each sou
 
 The technical Depth value you can choose. 2 is a good default value.
 
-The script `getBreakPoints.sh.sample` do all this. Following Lines you have to editfor your Repositiory:
+The script `getBreakPoints.sh.sample` do all this. Following lines you have to edit for your Repositiory:
 * <code>srcDir="< toDo >"</code> - replace here the path to your source code
 * <code>for srcFile  in `find . -type f  \
   -not -path "*<exclude Path1>*" \
   -not -path "*<exclude Path2>*"`</code> - here you can configure, from which files you want to collect the data. Exclude path with generated files.
-
 * <code>echo "breakPointTechDebt=2"</code> - edit the value here for the technical Debt
 * <code>echo "breakPointCommits=100"</code> - edit the value here for the number of commits
 
@@ -97,7 +96,7 @@ See also the list of [contributors](https://github.com/MarkusWessjohann/metricKe
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
