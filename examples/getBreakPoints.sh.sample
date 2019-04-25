@@ -9,7 +9,7 @@ date=`date +"%Y%m%d"`
 dataDir="$HOME/metric/metricData/"
 dataFile="${dataDir}/metric_data${date}.csv"
 # path to the Source Code repro
-srcDir="<toDo>"
+srcDir="< toDo >"
 
 if [ ! -d "$srcDir" ]
 then
@@ -55,7 +55,7 @@ lineDiffBP=`cat "$dataFile" | \
   sed -n "${lineDiffNr}p" | \
   cut -f7 -d";"`
 lineDiffBP="$(($lineDiffBP / 10 * 10))"
-# print the new breakpoints 
+# print the new breakpoints
 echo "breakPointLineDiff=$lineDiffBP"
 echo "breakPointLoc=$lineBP"
 echo "breakPointComplexity=$complexityBP"

@@ -54,12 +54,40 @@ The `tech. Debt` line shows how good and healthy your source code file is compar
 
 ###  Configuration
 
-<ToDo>
+This is the tricky part, setting the right breakpoint for your repository.
+You can use the [maat-scripts](https://github.com/adamtornhill/maat-scripts) from to collect the data. I wrote an extended version you can find [here](https://github.com/MarkusWessjohann/maat-scripts) or in the `examples`-directory.
+The scripts are in den `miner`-directory.
+To use this scripts you have to install python.
+Collect the data from all source code files into one csv file.
+Sort the csv file to the different columns and take the values from line at 5% from the top.
+This means, that 95% of the source code files are good and 5% could be better.
+The columns are:
+* 2 for the Lines of Code (LOC)-Value
+* 3 for the Complexity-Value
+* 7 for the LineDiff-Value
+
+For the number of Commits there is no script jet. Count the commits for each source code file  Sort this and take the value at row 5% of the file.
+
+The technical Depth value you can choose. 2 is a good default value.
+
+The script `getBreakPoints.sh.sample` do all this. Following Lines you have to editfor your Repositiory:
+* <code>srcDir="< toDo >"</code> - replace here the path to your source code
+* <code>for srcFile  in `find . -type f  \
+  -not -path "*<exclude Path1>*" \
+  -not -path "*<exclude Path2>*"`</code> - here you can configure, from which files you want to collect the data. Exclude path with generated files.
+
+* <code>echo "breakPointTechDebt=2"</code> - edit the value here for the technical Debt
+* <code>echo "breakPointCommits=100"</code> - edit the value here for the number of commits
 
 ## Running the tests
 
 <ToDo>
 
+## Todo
+
+Here a list of todos:
+* Add a script to collect the number of commits
+* More Documentation
 
 ## Authors
 
