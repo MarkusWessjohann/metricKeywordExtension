@@ -1,12 +1,11 @@
 #!/bin/sh
 # Author: MarkusWessjohann
 # Date: 24.08.2017
-# Desc: metric keyword substitution 
-#       Inserts # Commits
+# Desc: deleteing metric keywords
 
-
-files="$@"
-scriptpwd=`dirname "$0"`
+files=`cygpath -u "$@"`
+scriptpwd=`cygpath -u "$0"`
+scriptpwd=`dirname "$scriptpwd"`
 if [ "$#" -eq 0 ]
 then
   [ -d ".git" ] || cd ..
@@ -18,9 +17,4 @@ do
   [ -f "$file" ] || continue
   filename=`basename "$file"`
   echo "Processing file: $filename"
-  cat "$file" | \
-    "${scriptpwd}/metricUpdateSmudge" "$file" > "${file}.tmp"
-  mv "${file}.tmp" "$file"
 done
-
-

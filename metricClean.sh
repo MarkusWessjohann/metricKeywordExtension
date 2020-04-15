@@ -3,9 +3,9 @@
 # Date: 24.08.2017
 # Desc: deleteing metric keywords
 
-. metricUpdateFunc.sh
 
 files="$@"
+scriptpwd=`dirname "$0"`
 if [ "$#" -eq 0 ]
 then
   [ -d ".git" ] || cd ..
@@ -18,6 +18,7 @@ do
   filename=`basename "$file"`
   echo "Processing file: $filename"
   cat "$file" | \
-  metricUpdateClean "$file" > "${file}.tmp"
+    "${scriptpwd}/metricUpdateClean" "$file" > "${file}.tmp"
   mv "${file}.tmp" "$file"
 done
+

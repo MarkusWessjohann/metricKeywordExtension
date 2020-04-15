@@ -3,7 +3,9 @@
 # Date: 24.08.2017
 # Desc: metric helper-functions and variables
 
-. metricBreakPoints.sh
+
+scriptpwd=`dirname "$0"`
+. "${scriptpwd}/metricBreakPoints.sh"
 
 countCommits() {
   commitFile="$1"
@@ -25,5 +27,7 @@ techDebtPatternClean="\(.*# tech\. Debt *:\).*\( #.*\)"
 
 lineDiffPattern="# LineDiff *:.*#"
 lineDiffPatternClean="\(.*# LineDiff *:\).*\( #.*\)"
+
+
 
 

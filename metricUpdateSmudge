@@ -12,39 +12,40 @@
 
 file="$1"
 
-. metricUpdateFunc.sh
+scriptpwd=`dirname "$0"`
+. "${scriptpwd}/metricUpdateFunc.sh"
 
 countCommits "$file"
 
 cat - | \
-awk -- 'BEGIN {
-loc=0;
-techDebtLineNr=0;
-locLineNr=0;
-metricLineNr=0;
-commitLineNr=0;
-lineDiffLineNr=0;
-complexity=0; 
-techDebt=0;
-lineDiff=0;
-lastLineIndent=0;
-commits='$commits';
-breakPointComplexity='$breakPointComplexity'; 
-breakPointLoc='$breakPointLoc'; 
-breakPointCommits='$breakPointCommits'; 
-breakPointTechDebt='$breakPointTechDebt'; 
-breakPointLineDiff='$breakPointLineDiff'; 
-}
-// { line[NR]=$0;}
-/# Loc *:.*#/ {locLineNr=NR}
-/# tech. Debt *:.*#/ {techDebtLineNr=NR}
-/# Complexity *:.*#/ {metricLineNr=NR}
-/# LineDiff *:.*#/ {lineDiffLineNr=NR}
-/# Commits *:.*#/ {commitLineNr=NR}
-/^$/ { next;}
-/^[\t ]*\/\*/ { next;}
-/^\*/ { next;}
-/^[\t]+/ { match($0, "[^\t]");
+  awk -- 'BEGIN {
+    loc=0;
+    techDebtLineNr=0;
+    locLineNr=0;
+    metricLineNr=0;
+    commitLineNr=0;
+    lineDiffLineNr=0;
+    complexity=0; 
+    techDebt=0;
+    lineDiff=0;
+    lastLineIndent=0;
+    commits='$commits';
+    breakPointComplexity='$breakPointComplexity'; 
+    breakPointLoc='$breakPointLoc'; 
+    breakPointCommits='$breakPointCommits'; 
+    breakPointTechDebt='$breakPointTechDebt'; 
+    breakPointLineDiff='$breakPointLineDiff'; 
+  }
+  // { line[NR]=$0;}
+  /# Loc *:.*#/ {locLineNr=NR}
+  /# tech. Debt *:.*#/ {techDebtLineNr=NR}
+  /# Complexity *:.*#/ {metricLineNr=NR}
+  /# LineDiff *:.*#/ {lineDiffLineNr=NR}
+  /# Commits *:.*#/ {commitLineNr=NR}
+  /^$/ { next;}
+  /^[\t ]*\/\*/ { next;}
+  /^\*/ { next;}
+  /^[\t]+/ { match($0, "[^\t]");
     lineIndent=RSTART;
     complexity+=lineIndent;
     if (lineIndent != lastLineIndent) {
@@ -52,82 +53,83 @@ breakPointLineDiff='$breakPointLineDiff';
     }
     lastLineIndent=lineIndent;
     next;
-}
-/^[ ]+/ { match($0, "[^ ]");
-    lineIndent=RSTART/2;
-    complexity+=lineIndent;
-    if (lineIndent != lastLineIndent) {
-      lineDiff++;
+   }
+   /^[ ]+/ { match($0, "[^ ]");
+      lineIndent=RSTART/2;
+      complexity+=lineIndent;
+      if (lineIndent != lastLineIndent) {
+        lineDiff++;
+      }
+      lastLineIndent=lineIndent;
+      next;
     }
-    lastLineIndent=lineIndent;
-    next;
-}
-/^[^ \t]*/ {
-    lineIndent=0;
-    complexity+=lineIndent;
-    if (lineIndent != lastLineIndent) {
-      lineDiff++;
+    /^[^ \t]*/ {
+      lineIndent=0;
+      complexity+=lineIndent;
+      if (lineIndent != lastLineIndent) {
+        lineDiff++;
+      }
+      lastLineIndent=lineIndent;
+      next;
     }
-    lastLineIndent=lineIndent;
-    next;
-}
 
-END { 
- loc=NR; 
- operator="<";
- alert=" ";
- if (loc > breakPointLoc) {
-    techDebt++;
-    operator=">";
-    alert="!";
- }
- if (locLineNr> 0) {
-   newString=sprintf("# Loc        : %1s %4d %s %4d #", alert, loc, operator, breakPointLoc);
-   sub("# Loc *:.*#", newString, line[locLineNr]);
- }
- operator="<";
- alert=" ";
- if (complexity > breakPointComplexity) {
-   techDebt++;
-   operator=">";
-   alert="!";
- }
- if (metricLineNr> 0) {
-   newString=sprintf("# Complexity : %1s %4d %s %4d #", alert, complexity, operator, breakPointComplexity);
-   sub("# Complexity *:.*#", newString, line[metricLineNr]);
- }
- operator="<";
- alert=" ";
- if (lineDiff > breakPointLineDiff) {
-   techDebt++;
-   operator=">";
-   alert="!";
- }
- if (lineDiffLineNr> 0) {
-   newString=sprintf("# LineDiff   : %1s %4d %s %4d #", alert, lineDiff, operator, breakPointLineDiff);
-   sub("# LineDiff *:.*#", newString, line[lineDiffLineNr]);
- }
- operator="<";
- alert=" ";
- if (commits > breakPointCommits) {
-   techDebt++;
-   operator=">";
-   alert="!";
- }
- if (commitLineNr> 0) {
-   newString=sprintf("# Commits    : %1s %4d %s %4d #", alert, commits, operator, breakPointCommits);
-   sub("# Commits *:.*#", newString, line[commitLineNr]);
- }
- alert=" ";
- if (techDebt > breakPointtechDebt) {
-     alert="!";
- }
- if (techDebtLineNr> 0) {
-   newString=sprintf("# tech. Debt : %1s %4d #", alert, techDebt);
-   sub("# tech. Debt *:.*#", newString, line[techDebtLineNr]);
- }
- for(i=1;i<=NR;i++) 
-   printf("%s\n",line[i]);
-}'
+    END { 
+      loc=NR; 
+      operator="<";
+      alert=" ";
+      if (loc > breakPointLoc) {
+        techDebt++;
+        operator=">";
+        alert="!";
+      }
+      if (locLineNr> 0) {
+        newString=sprintf("# Loc        : %1s %4d %s %4d #", alert, loc, operator, breakPointLoc);
+        sub("# Loc *:.*#", newString, line[locLineNr]);
+      }
+      operator="<";
+      alert=" ";
+      if (complexity > breakPointComplexity) {
+        techDebt++;
+        operator=">";
+        alert="!";
+      }
+      if (metricLineNr> 0) {
+        newString=sprintf("# Complexity : %1s %4d %s %4d #", alert, complexity, operator, breakPointComplexity);
+        sub("# Complexity *:.*#", newString, line[metricLineNr]);
+      }
+      operator="<";
+      alert=" ";
+      if (lineDiff > breakPointLineDiff) {
+        techDebt++;
+        operator=">";
+        alert="!";
+      }
+      if (lineDiffLineNr> 0) {
+        newString=sprintf("# LineDiff   : %1s %4d %s %4d #", alert, lineDiff, operator, breakPointLineDiff);
+        sub("# LineDiff *:.*#", newString, line[lineDiffLineNr]);
+      }
+      operator="<";
+      alert=" ";
+      if (commits > breakPointCommits) {
+        techDebt++;
+        operator=">";
+        alert="!";
+      }
+      if (commitLineNr> 0) {
+        newString=sprintf("# Commits    : %1s %4d %s %4d #", alert, commits, operator, breakPointCommits);
+        sub("# Commits *:.*#", newString, line[commitLineNr]);
+      }
+      alert=" ";
+      if (techDebt > breakPointtechDebt) {
+        alert="!";
+      }
+      if (techDebtLineNr> 0) {
+        newString=sprintf("# tech. Debt : %1s %4d #", alert, techDebt);
+        sub("# tech. Debt *:.*#", newString, line[techDebtLineNr]);
+      }
+      for(i=1;i<=NR;i++) 
+        printf("%s\n",line[i]);
+      }'
+
 
 

@@ -4,4 +4,5 @@
 # Desc: deleting metric keyword for all files
 #
 
-metricClean.sh `find . -type f | xargs grep -l "# Complexity"`
+scriptpwd=`dirname "$0"`
+"${scriptpwd}/metricClean.sh" `find . -type f | xargs grep -l "# Complexity"`
