@@ -29,5 +29,3 @@ lineDiffPattern="# LineDiff *:.*#"
 lineDiffPatternClean="\(.*# LineDiff *:\).*\( #.*\)"
 
 
-
-

@@ -6,4 +6,3 @@
 
 scriptpwd=`dirname "$0"`
 "${scriptpwd}/metricUpdate.sh" `find . -type f | xargs grep -l "# Complexity"`
-
